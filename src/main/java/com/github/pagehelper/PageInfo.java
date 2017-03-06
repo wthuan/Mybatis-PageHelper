@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2014 abel533@gmail.com
+ * Copyright (c) 2014-2017 abel533@gmail.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -47,8 +47,6 @@ public class PageInfo<T> implements Serializable {
     private int pageSize;
     //当前页的数量
     private int size;
-    //排序
-    private String orderBy;
 
     //由于startRow和endRow不常用，这里说个具体的用法
     //可以在页面中"显示startRow到endRow 共size条数据"
@@ -64,14 +62,10 @@ public class PageInfo<T> implements Serializable {
     //结果集
     private List<T> list;
 
-    //第一页
-    private int firstPage;
     //前一页
     private int prePage;
     //下一页
     private int nextPage;
-    //最后一页
-    private int lastPage;
 
     //是否为第一页
     private boolean isFirstPage = false;
@@ -85,6 +79,10 @@ public class PageInfo<T> implements Serializable {
     private int navigatePages;
     //所有导航页号
     private int[] navigatepageNums;
+    //导航条上的第一页
+    private int navigateFirstPage;
+    //导航条上的最后一页
+    private int navigateLastPage;
 
     public PageInfo() {
     }
@@ -109,7 +107,6 @@ public class PageInfo<T> implements Serializable {
             Page page = (Page) list;
             this.pageNum = page.getPageNum();
             this.pageSize = page.getPageSize();
-            this.orderBy = page.getOrderBy();
 
             this.pages = page.getPages();
             this.list = page;
@@ -187,8 +184,8 @@ public class PageInfo<T> implements Serializable {
      */
     private void calcPage() {
         if (navigatepageNums != null && navigatepageNums.length > 0) {
-            firstPage = navigatepageNums[0];
-            lastPage = navigatepageNums[navigatepageNums.length - 1];
+            navigateFirstPage = navigatepageNums[0];
+            navigateLastPage = navigatepageNums[navigatepageNums.length - 1];
             if (pageNum > 1) {
                 prePage = pageNum - 1;
             }
@@ -232,14 +229,6 @@ public class PageInfo<T> implements Serializable {
         this.size = size;
     }
 
-    public String getOrderBy() {
-        return orderBy;
-    }
-
-    public void setOrderBy(String orderBy) {
-        this.orderBy = orderBy;
-    }
-
     public int getStartRow() {
         return startRow;
     }
@@ -280,12 +269,15 @@ public class PageInfo<T> implements Serializable {
         this.list = list;
     }
 
+    @Deprecated
+    // firstPage就是1, 此函数获取的是导航条上的第一页, 容易产生歧义
     public int getFirstPage() {
-        return firstPage;
+        return navigateFirstPage;
     }
 
+    @Deprecated
     public void setFirstPage(int firstPage) {
-        this.firstPage = firstPage;
+        this.navigateFirstPage = firstPage;
     }
 
     public int getPrePage() {
@@ -304,12 +296,15 @@ public class PageInfo<T> implements Serializable {
         this.nextPage = nextPage;
     }
 
+    @Deprecated
+    // 请用getPages()来获取最后一页, 此函数获取的是导航条上的最后一页, 容易产生歧义.
     public int getLastPage() {
-        return lastPage;
+        return navigateLastPage;
     }
 
+    @Deprecated
     public void setLastPage(int lastPage) {
-        this.lastPage = lastPage;
+        this.navigateLastPage = lastPage;
     }
 
     public boolean isIsFirstPage() {
@@ -360,6 +355,22 @@ public class PageInfo<T> implements Serializable {
         this.navigatepageNums = navigatepageNums;
     }
 
+    public int getNavigateFirstPage() {
+        return navigateFirstPage;
+    }
+
+    public int getNavigateLastPage() {
+        return navigateLastPage;
+    }
+
+    public void setNavigateFirstPage(int navigateFirstPage) {
+        this.navigateFirstPage = navigateFirstPage;
+    }
+
+    public void setNavigateLastPage(int navigateLastPage) {
+        this.navigateLastPage = navigateLastPage;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("PageInfo{");
@@ -371,15 +382,15 @@ public class PageInfo<T> implements Serializable {
         sb.append(", total=").append(total);
         sb.append(", pages=").append(pages);
         sb.append(", list=").append(list);
-        sb.append(", firstPage=").append(firstPage);
         sb.append(", prePage=").append(prePage);
         sb.append(", nextPage=").append(nextPage);
-        sb.append(", lastPage=").append(lastPage);
         sb.append(", isFirstPage=").append(isFirstPage);
         sb.append(", isLastPage=").append(isLastPage);
         sb.append(", hasPreviousPage=").append(hasPreviousPage);
         sb.append(", hasNextPage=").append(hasNextPage);
         sb.append(", navigatePages=").append(navigatePages);
+        sb.append(", navigateFirstPage").append(navigateFirstPage);
+        sb.append(", navigateLastPage").append(navigateLastPage);
         sb.append(", navigatepageNums=");
         if (navigatepageNums == null) sb.append("null");
         else {

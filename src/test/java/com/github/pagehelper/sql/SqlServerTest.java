@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2014 abel533@gmail.com
+ * Copyright (c) 2014-2017 abel533@gmail.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 
 package com.github.pagehelper.sql;
 
-import com.github.pagehelper.parser.SqlServer;
+import com.github.pagehelper.parser.SqlServerParser;
 import net.sf.jsqlparser.JSQLParserException;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -33,7 +33,7 @@ import org.junit.Test;
  * @author liuzh
  */
 public class SqlServerTest {
-    public static final SqlServer sqlServer = new SqlServer();
+    public static final SqlServerParser sqlServer = new SqlServerParser();
 
     @Test
     @Ignore("暂时不支持")
@@ -149,6 +149,30 @@ public class SqlServerTest {
                 "\tselect countryname,countrycode code from country where id < 10 " +
                 ") as temp " +
                 "order by code";
+        System.out.println(sqlServer.convertToPageSql(originalSql, 1, 10));
+    }
+
+    @Test
+    public void testSqlOrderByFunctionAlias() throws JSQLParserException {
+        String originalSql = "select countrycode code, func() func_alias from country order by func()";
+        System.out.println(sqlServer.convertToPageSql(originalSql, 1, 10));
+    }
+
+    @Test
+    public void testSqlOrderByUnknown() throws JSQLParserException {
+        String originalSql = "select countryname from country order by countrycode";
+        System.out.println(sqlServer.convertToPageSql(originalSql, 1, 10));
+    }
+
+    @Test
+    public void testSqlOrderByTable() throws JSQLParserException {
+        String originalSql = "select t.countrycode, t.countryname from country t order by t.countrycode";
+        System.out.println(sqlServer.convertToPageSql(originalSql, 1, 10));
+    }
+
+    @Test
+    public void testSqlStar() throws JSQLParserException {
+        String originalSql = "select t.*, 1 alias from country t order by t.countrycode";
         System.out.println(sqlServer.convertToPageSql(originalSql, 1, 10));
     }
 }

@@ -2,7 +2,7 @@
 <!--
   ~ The MIT License (MIT)
   ~
-  ~ Copyright (c) 2014 abel533@gmail.com
+  ~ Copyright (c) 2014-2017 abel533@gmail.com
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@
         <setting name="cacheEnabled" value="true"/>
         <setting name="lazyLoadingEnabled" value="false"/>
         <setting name="aggressiveLazyLoading" value="true"/>
-        <setting name="logImpl" value="LOG4J"/>
+        <!--<setting name="logImpl" value="LOG4J"/>-->
     </settings>
 
     <typeAliases>
@@ -40,8 +40,7 @@
     </typeAliases>
 
     <plugins>
-        <plugin interceptor="com.github.pagehelper.PageHelper">
-            <property name="dialect" value="postgresql"/>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
             <property name="offsetAsPageNum" value="true"/>
             <property name="rowBoundsWithCount" value="true"/>
         </plugin>
@@ -54,7 +53,7 @@
             </transactionManager>
             <dataSource type="UNPOOLED">
                 <property name="driver" value="org.postgresql.Driver"/>
-                <property name="url" value="jdbc:postgresql://localhost:5432/pagehelper"/>
+                <property name="url" value="jdbc:postgresql://192.168.16.137:5432/pagehelper"/>
                 <property name="username" value="pagehelper"/>
                 <property name="password" value="pagehelper"/>
             </dataSource>

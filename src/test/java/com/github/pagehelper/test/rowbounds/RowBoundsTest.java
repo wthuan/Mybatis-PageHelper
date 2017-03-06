@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2014 abel533@gmail.com
+ * Copyright (c) 2014-2017 abel533@gmail.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -201,7 +201,7 @@ public class RowBoundsTest {
         try {
             //limit=0,这时候相当于用分页插件求count,但是前提必须是配置rounbounds方式求count，否则都是-1
             //这里由于没有配置，应该都是-1
-            List<Country> list = countryMapper.selectAll(new RowBounds(1, 0));
+            List<Country> list = countryMapper.selectAll(new RowBounds(1, -1));
             PageInfo<Country> page = new PageInfo<Country>(list);
             assertEquals(0, list.size());
             assertEquals(183, page.getTotal());

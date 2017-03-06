@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2014 abel533@gmail.com
+ * Copyright (c) 2014-2017 abel533@gmail.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -50,7 +50,8 @@ public class MybatisHelper {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
             reader.close();
             if (TestUtil.getXmlPath().equalsIgnoreCase("hsqldb")
-                    || TestUtil.getXmlPath().equalsIgnoreCase("h2")) {
+                    || TestUtil.getXmlPath().equalsIgnoreCase("h2")
+                    || TestUtil.getXmlPath().equalsIgnoreCase("derby")) {
                 //创建数据库
                 SqlSession session = null;
                 try {

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2014 abel533@gmail.com
+ * Copyright (c) 2014-2017 abel533@gmail.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ public class TestISelect {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         final CountryMapper countryMapper = sqlSession.getMapper(CountryMapper.class);
         try {
-            Page<Country> page = PageHelper.startPage(1, 10).setOrderBy("id desc").doSelectPage(new ISelect() {
+            Page<Country> page = PageHelper.startPage(1, 10).doSelectPage(new ISelect() {
                 @Override
                 public void doSelect() {
                     countryMapper.selectGroupBy();
@@ -63,7 +63,7 @@ public class TestISelect {
             System.out.println(pageInfo);
 
 
-            pageInfo = PageHelper.startPage(1, 10).setOrderBy("id desc").doSelectPageInfo(new ISelect() {
+            pageInfo = PageHelper.startPage(1, 10).doSelectPageInfo(new ISelect() {
                 @Override
                 public void doSelect() {
                     countryMapper.selectGroupBy();

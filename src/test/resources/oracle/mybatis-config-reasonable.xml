@@ -2,7 +2,7 @@
 <!--
   ~ The MIT License (MIT)
   ~
-  ~ Copyright (c) 2014 abel533@gmail.com
+  ~ Copyright (c) 2014-2017 abel533@gmail.com
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@
         <setting name="cacheEnabled" value="true"/>
         <setting name="lazyLoadingEnabled" value="false"/>
         <setting name="aggressiveLazyLoading" value="true"/>
-        <setting name="logImpl" value="LOG4J"/>
+        <!--<setting name="logImpl" value="LOG4J"/>-->
     </settings>
 
     <typeAliases>
@@ -40,8 +40,7 @@
     </typeAliases>
 
     <plugins>
-        <plugin interceptor="com.github.pagehelper.PageHelper">
-            <property name="dialect" value="oracle"/>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
             <property name="reasonable" value="true"/>
         </plugin>
     </plugins>
@@ -53,9 +52,9 @@
             </transactionManager>
             <dataSource type="UNPOOLED">
                 <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
-                <property name="url" value=" jdbc:oracle:thin:@//localhost:1521/orcl"/>
-                <property name="username" value="scott"/>
-                <property name="password" value="tiger"/>
+                <property name="url" value="jdbc:oracle:thin:@//192.168.16.137:1521/orcl"/>
+                <property name="username" value="mybatis"/>
+                <property name="password" value="mybatis"/>
             </dataSource>
         </environment>
     </environments>

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2014 abel533@gmail.com
+ * Copyright (c) 2014-2017 abel533@gmail.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@
 package com.github.pagehelper.test.basic;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.mapper.CountryMapper;
 import com.github.pagehelper.model.Country;
 import com.github.pagehelper.util.MybatisHelper;
@@ -48,7 +49,6 @@ public class ArgumentsMapTest {
             List<Country> list = countryMapper.selectByPageNumSizeOrderBy(1, 10, "id desc");
             assertEquals(10, list.size());
             assertEquals(183, ((Page<?>) list).getTotal());
-
             list = countryMapper.selectByPageNumSize(2, 10);
             assertEquals(10, list.size());
             assertEquals(183, ((Page<?>) list).getTotal());
@@ -56,10 +56,6 @@ public class ArgumentsMapTest {
             list = countryMapper.selectByPageNumSize(3, 20);
             assertEquals(20, list.size());
             assertEquals(183, ((Page<?>) list).getTotal());
-
-            list = countryMapper.selectByOrderBy("id desc");
-            assertEquals(183, list.size());
-            assertEquals(183, list.get(0).getId());
         } finally {
             sqlSession.close();
         }
